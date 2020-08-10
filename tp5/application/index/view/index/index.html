@@ -3,22 +3,55 @@
 <head>
 	<meta charset="UTF-8">
 	<title>主页</title>
+	<link rel="stylesheet"  type="text/css" href="__CSS__/index.css">
+
+	<script type="text/javascript">
+		function delCfm() { 
+	        if (!confirm("确认要删除？")) { 
+	            window.event.returnValue = false; 
+	        } 
+	    } 
+	</script>
 </head>
 <body>
+	<!-- 菜单栏 -->
 	<div>
-		<table>
+		<nav id="nav">
+			<!-- 添加货物 -->
+			<a href="{:url('index/index/addgoods')}"><button>添加货物信息</button></a>
+			<!-- 货物查询框 -->
+			<form action="{:url('index/index/index')}" id="sear">
+				<input type="text" placeholder="请输入货物名称或种类" name="sousuo">
+				<input type="submit" value="查询">
+			</form>
+		</nav>
+	</div>
+
+
+
+	<!-- 货物信息表 -->
+	<div>
+		<table id="mes" >
 			<tr>
-				<td>货物名称</td>
-				<td></td>
+				<td colspan="1">ID</td>
+				<td colspan="3">货物名称</td>
+				<td colspan="2">货号</td>
+				<td colspan="4">添加时间</td>
+				<td colspan="1">添加人</td>
+				<td colspan="1">操作</td>
+
 			</tr>
+			{volist name="mes" id="mesRow"}
 			<tr>
-				<td></td>
-				<td></td>
+				<td colspan="1">{$mesRow.mesId}</td>
+				<td colspan="3">{$mesRow.goods}</td>
+				<td colspan="2">{$mesRow.goodsId}</td>
+				<td colspan="4">{$mesRow.addTime|date="Y-m-d H:i:s",###}</td>
+				<td colspan="1">{$mesRow.addUser}</td>
+				<td colspan="1"><a href="{:url('index/index/delGoods',['goodsId'=>$mesRow.goodsId])}" onClick="delCfm()">删除</a></td>
 			</tr>
-			<tr>
-				<td></td>
-				<td></td>
-			</tr>
+			{/volist}
+
 		</table>
 	</div>
 </body>
